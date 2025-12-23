@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="ripc_usv">
+
+  <!-- ================== Base link / Dummy root ================== -->
+  <link name="base_link">
+    <!-- Dummy root, no visual/collision -->
+  </link>
+
+  <!-- ================== Hull ================== -->
+  <link name="hull">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="50.0"/>
+      <inertia ixx="5.0" ixy="0.0" ixz="0.0"
+               iyy="5.0" iyz="0.0"
+               izz="10.0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.446 0 0.0127" rpy="0 0 1.5708"/> 
+      <geometry>
+        <mesh filename="package://ripc_description/meshes/ripc_usv.dae" scale="1 1 1"/>
+      </geometry>
+      <material name="ripc_hull_color">
+        <color rgba="0.1 0.2 0.8 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.446 0 0.0127" rpy="0 0 1.5708"/>
+      <geometry>
+        <mesh filename="package://ripc_description/meshes/ripc_usv.dae" scale="1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Fixed joint from base_link to hull -->
+  <joint name="base_to_hull" type="fixed">
+    <parent link="base_link"/>
+    <child link="hull"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <!-- ================== Left Propeller ================== -->
+  <link name="left_propeller_link">
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001"/>
+    </inertial>
+    <!-- Visual removed, can add mesh later -->
+  </link>
+
+  <joint name="left_propeller_joint" type="continuous">
+    <parent link="hull"/>
+    <child link="left_propeller_link"/>
+    <origin xyz="-0.5192 0.1778 -0.1905" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+
+  <!-- ================== Right Propeller ================== -->
+  <link name="right_propeller_link">
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001"/>
+    </inertial>
+    <!-- Visual removed, can add mesh later -->
+  </link>
+
+  <joint name="right_propeller_joint" type="continuous">
+    <parent link="hull"/>
+    <child link="right_propeller_link"/>
+    <origin xyz="-0.5192 -0.1778 -0.1905" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+
+</robot>

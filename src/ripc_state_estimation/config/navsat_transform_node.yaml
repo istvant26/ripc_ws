@@ -1,0 +1,13 @@
+navsat_transform_node:
+  ros__parameters:
+    frequency: 10.0
+    wait_for_datum: false
+    broadcast_utm_transform: true
+    yaw_offset: 0.0
+    zero_altitude: false
+    world_frame: map
+    odom_frame: odom
+    base_link_frame: base_link
+    gps_topic: /custom_usv/gps/fix
+    imu_topic: /custom_usv/imu/data
+    odom_topic: /custom_usv/odom

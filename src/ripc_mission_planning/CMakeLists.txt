@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.8)
+project(custom_usv_mission)
+find_package(ament_cmake REQUIRED)
+install(DIRECTORY launch src DESTINATION share/${PROJECT_NAME})
+ament_package()

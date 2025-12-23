@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>custom_usv_nav</name>
+  <version>0.0.1</version>
+  <description>Nav2 configs for USV</description>
+  <maintainer email="you@example.com">You</maintainer>
+  <license>Apache-2.0</license>
+  <exec_depend>nav2_bringup</exec_depend>
+</package>

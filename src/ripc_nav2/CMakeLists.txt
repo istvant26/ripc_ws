@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.8)
+project(custom_usv_nav)
+find_package(ament_cmake REQUIRED)
+install(DIRECTORY config maps behavior_trees launch DESTINATION share/${PROJECT_NAME})
+ament_package()

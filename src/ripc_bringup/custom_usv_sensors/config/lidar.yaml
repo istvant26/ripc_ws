@@ -1,0 +1,2 @@
+scan_topic: /custom_usv/scan
+frame_id: lidar_link

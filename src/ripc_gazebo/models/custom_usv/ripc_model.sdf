@@ -1,0 +1,152 @@
+<?xml version="1.0"?>
+<sdf version="1.8">
+  <model name="ripc_usv">
+    <static>false</static>
+
+    <!-- HULL LINK -->
+    <link name="hull">
+      <pose>0 0 0 0 0 0</pose>
+      <inertial>
+        <mass>50.0</mass>
+        <inertia>
+          <ixx>5.0</ixx>
+          <iyy>5.0</iyy>
+          <izz>10.0</izz>
+          <ixy>0.0</ixy>
+          <ixz>0.0</ixz>
+          <iyz>0.0</iyz>
+        </inertia>
+      </inertial>
+
+      <visual name="hull_visual">
+        <geometry>
+          <mesh>
+            <uri>model://ripc_usv/meshes/Hull_No_FF_Cy.dae</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+      </visual>
+
+      <collision name="hull_collision">
+        <geometry>
+          <mesh>
+            <uri>model://ripc_usv/meshes/Hull_No_FF_Cy.dae</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- LEFT PROPELLER LINK -->
+    <link name="left_propeller_link">
+      <pose>-0.6 0.25 -0.05 0 0 0</pose>
+      <inertial>
+        <mass>0.5</mass>
+        <inertia>
+          <ixx>0.001</ixx>
+          <iyy>0.001</iyy>
+          <izz>0.001</izz>
+          <ixy>0.0</ixy>
+          <ixz>0.0</ixz>
+          <iyz>0.0</iyz>
+        </inertia>
+      </inertial>
+      <visual name="left_propeller_visual">
+        <geometry>
+          <cylinder>
+            <radius>0.03</radius>
+            <length>0.1</length>
+          </cylinder>
+        </geometry>
+      </visual>
+      <collision name="left_propeller_collision">
+        <geometry>
+          <cylinder>
+            <radius>0.03</radius>
+            <length>0.1</length>
+          </cylinder>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- RIGHT PROPELLER LINK -->
+    <link name="right_propeller_link">
+      <pose>-0.6 -0.25 -0.05 0 0 0</pose>
+      <inertial>
+        <mass>0.5</mass>
+        <inertia>
+          <ixx>0.001</ixx>
+          <iyy>0.001</iyy>
+          <izz>0.001</izz>
+          <ixy>0.0</ixy>
+          <ixz>0.0</ixz>
+          <iyz>0.0</iyz>
+        </inertia>
+      </inertial>
+      <visual name="right_propeller_visual">
+        <geometry>
+          <cylinder>
+            <radius>0.03</radius>
+            <length>0.1</length>
+          </cylinder>
+        </geometry>
+      </visual>
+      <collision name="right_propeller_collision">
+        <geometry>
+          <cylinder>
+            <radius>0.03</radius>
+            <length>0.1</length>
+          </cylinder>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- JOINTS: hull to propellers (spin about X) -->
+    <joint name="left_propeller_joint" type="revolute">
+      <parent>hull</parent>
+      <child>left_propeller_link</child>
+      <pose>0 0 0 0 0 0</pose>
+      <axis>
+        <xyz>1 0 0</xyz>
+        <limit>
+          <lower>-1e16</lower>
+          <upper>1e16</upper>
+        </limit>
+      </axis>
+    </joint>
+
+    <joint name="right_propeller_joint" type="revolute">
+      <parent>hull</parent>
+      <child>right_propeller_link</child>
+      <pose>0 0 0 0 0 0</pose>
+      <axis>
+        <xyz>1 0 0</xyz>
+        <limit>
+          <lower>-1e16</lower>
+          <upper>1e16</upper>
+        </limit>
+      </axis>
+    </joint>
+
+    <!-- LEFT THRUSTER PLUGIN -->
+    <plugin filename="gz-sim-thruster-system" name="gz::sim::systems::Thruster">
+      <namespace>ripc_usv</namespace>
+      <joint_name>left_propeller_joint</joint_name>
+      <thrust_coefficient>0.0001</thrust_coefficient>
+      <fluid_density>1000</fluid_density>
+      <propeller_diameter>0.10</propeller_diameter>
+      <velocity_control>false</velocity_control>
+    </plugin>
+
+    <!-- RIGHT THRUSTER PLUGIN -->
+    <plugin filename="gz-sim-thruster-system" name="gz::sim::systems::Thruster">
+      <namespace>ripc_usv</namespace>
+      <joint_name>right_propeller_joint</joint_name>
+      <thrust_coefficient>0.0001</thrust_coefficient>
+      <fluid_density>1000</fluid_density>
+      <propeller_diameter>0.10</propeller_diameter>
+      <velocity_control>false</velocity_control>
+    </plugin>
+
+  </model>
+</sdf>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>custom_usv_sensors</name>
+  <version>0.0.1</version>
+  <description>Sensor-related configs for USV</description>
+  <maintainer email="you@example.com">You</maintainer>
+  <license>Apache-2.0</license>
+  <exec_depend>sensor_msgs</exec_depend>
+</package>

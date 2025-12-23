@@ -1,0 +1,25 @@
+use_sim_time: True
+controller_server:
+  ros__parameters:
+    controller_frequency: 10.0
+    min_x_velocity: -0.5
+    max_x_velocity: 1.5
+    max_rotational_vel: 0.6
+    holonomic_robot: False
+planner_server:
+  ros__parameters:
+    expected_planner_frequency: 0.5
+global_costmap:
+  ros__parameters:
+    global_frame: odom
+    robot_base_frame: base_link
+    update_frequency: 1.0
+    publish_frequency: 1.0
+    plugins: ["static_layer","obstacle_layer"]
+local_costmap:
+  ros__parameters:
+    global_frame: odom
+    robot_base_frame: base_link
+    update_frequency: 5.0
+    publish_frequency: 2.0
+    plugins: ["obstacle_layer"]

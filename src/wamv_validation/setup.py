@@ -15,7 +15,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'wamv_twist_from_pose = wamv_validation.wamv_twist_from_pose:main',
+            'wamv_simple_forward = wamv_validation.wamv_simple_forward:main',
+            'wamv_right_thruster_turn = wamv_validation.wamv_right_thruster_turn:main',
         ],
     },
 )

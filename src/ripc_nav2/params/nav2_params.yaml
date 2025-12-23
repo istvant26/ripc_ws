@@ -1,0 +1,3 @@
+# minimal params so install passes
+amcl:
+  ros__parameters: {}
