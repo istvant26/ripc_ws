@@ -1,13 +1,26 @@
 from launch import LaunchDescription
 from launch_ros.actions import Node
-from ament_index_python.packages import get_package_share_directory
-import os
+from launch.actions import ExecuteProcess
 
 def generate_launch_description():
-    pkg = get_package_share_directory('custom_usv_control')
-    cfg = os.path.join(pkg, 'config', 'usv_ros2_control.yaml')
     return LaunchDescription([
-        Node(package='controller_manager', executable='ros2_control_node', output='screen', parameters=[cfg]),
-        Node(package='controller_manager', executable='spawner', arguments=['thruster_controller']),
-        Node(package='controller_manager', executable='spawner', arguments=['joint_state_broadcaster'])
+
+        # Bridge for thrusters
+        Node(
+            package='ros_gz_bridge',
+            executable='parameter_bridge',
+            name='thruster_bridge',
+            arguments=[
+                '/ripc_usv/thrusters/left/thrust@std_msgs/msg/Float64@gz.msgs.Double',
+                '/ripc_usv/thrusters/right/thrust@std_msgs/msg/Float64@gz.msgs.Double'
+            ],
+            output='screen'
+        ),
+
+        # Run Python script directly using system python
+        ExecuteProcess(
+            cmd=['python3', '/home/riplab/ripc_ws/src/ripc_control/scripts/send_thrust.py'],
+            output='screen'
+        ),
+
     ])

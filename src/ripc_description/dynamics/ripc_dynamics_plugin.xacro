@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="usv_dynamics_gazebo" params="namespace">
+
+    <gazebo>
+
+      <!-- ================= BUOYANCY (MONOHULL) ================= -->
+      <plugin filename="libSurface.so" name="vrx::Surface">
+
+        <!-- Apply buoyancy to hull -->
+        <link_name>base_link</link_name>
+
+        <!-- Hull geometry -->
+        <hull_length>1.524</hull_length>
+        <hull_radius>0.381</hull_radius>
+
+        <!-- Water surface height -->
+        <fluid_level>0.0</fluid_level>
+
+        <!-- Buoyancy points along keel -->
+        <points>
+            <!-- Bow -->
+            <point>0.762  0.381 -0.106</point>
+            <point>0.762 -0.381 -0.106</point>
+            <!-- Midship -->
+            <point>0.0  0.381 -0.106</point>
+            <point>0.0 -0.381 -0.106</point>
+            <!-- Stern -->
+            <point>-0.762  0.381 -0.106</point>
+            <point>-0.762 -0.381 -0.106</point>
+        </points>
+
+        <wavefield>
+          <topic>/vrx/wavefield/parameters</topic>
+        </wavefield>
+
+      </plugin>
+
+      <!-- ================= HYDRODYNAMICS ================= -->
+      <plugin filename="libSimpleHydrodynamics.so"
+              name="vrx::SimpleHydrodynamics">
+
+        <link_name>base_link</link_name>
+
+        <!-- Added mass (start simple) -->
+        <xDotU>0.0</xDotU>
+        <yDotV>0.0</yDotV>
+        <nDotR>0.0</nDotR>
+
+        <!-- Linear + quadratic drag -->
+        <xU>80.0</xU>
+        <xUU>120.0</xUU>
+
+        <yV>120.0</yV>
+        <yVV>120.0</yVV>
+
+        <zW>350.0</zW>
+
+        <!-- Roll / pitch / yaw damping -->
+        <kP>150.0</kP>
+        <kPP>300.0</kPP>
+
+        <mQ>300.0</mQ>
+        <mQQ>600.0</mQQ>
+
+        <nR>400.0</nR>
+        <nRR>600.0</nRR>
+
+      </plugin>
+
+    </gazebo>
+
+  </xacro:macro>
+
+</robot>

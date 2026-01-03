@@ -15,3 +15,7 @@ install(DIRECTORY launch
         DESTINATION share/${PROJECT_NAME})
 
 ament_package()
+
+install(DIRECTORY dynamics
+  DESTINATION share/${PROJECT_NAME}
+)

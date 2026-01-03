@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- ===============================
+       RIPC Thruster Macro
+       - namespace: robot name or unique prefix
+       - name: 'left' or 'right'
+  ================================ -->
+  <xacro:macro name="ripc_thruster" params="namespace name parent_link xyz">
+
+    <!-- Unique propeller link -->
+    <link name="${name}_propeller_link">
+      <inertial>
+        <mass value="0.1"/>
+        <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+                 iyy="0.0001" iyz="0.0"
+                 izz="0.0001"/>
+      </inertial>
+      <!-- Optional visual for debugging -->
+      <visual>
+        <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+        <geometry>
+          <cylinder radius="0.05" length="0.01"/>
+        </geometry>
+        <material name="propeller_gray">
+          <color rgba="0.3 0.3 0.3 1.0"/>
+        </material>
+      </visual>
+    </link>
+
+    <!-- Continuous joint for spinning -->
+    <joint name="${namespace}_${name}_propeller_joint" type="continuous">
+      <parent link="${parent_link}"/>
+      <child link="${name}_propeller_link"/>
+      <origin xyz="${xyz}" rpy="0 0 0"/>
+      <axis xyz="1 0 0"/>
+    </joint>
+
+    <!-- Gazebo Thruster plugin -->
+    <gazebo>
+      <plugin filename="gz-sim-thruster-system" name="gz::sim::systems::Thruster">
+
+        <joint_name>${namespace}_${name}_propeller_joint</joint_name>
+        <link_name>${parent_link}</link_name>
+        <thrust_coefficient>0.004422</thrust_coefficient>
+        <fluid_density>1000</fluid_density>
+        <propeller_diameter>0.1</propeller_diameter>
+        <velocity_control>true</velocity_control>
+        <max_thrust_cmd>80</max_thrust_cmd>
+        <namespace>${namespace}</namespace>
+        <topic>thrusters/${name}/thrust</topic>
+      </plugin>
+    </gazebo>
+
+  </xacro:macro>
+
+  <!-- ===============================
+       Dual Thrusters Convenience Macro
+  ================================ -->
+  <xacro:macro name="ripc_thrusters" params="namespace parent_link">
+
+    <!-- Left thruster -->
+    <xacro:ripc_thruster namespace="${namespace}"
+                         name="left"
+                         parent_link="${parent_link}"
+                         xyz="-0.5192 0.1778 -0.1905"/>
+
+    <!-- Right thruster -->
+    <xacro:ripc_thruster namespace="${namespace}"
+                         name="right"
+                         parent_link="${parent_link}"
+                         xyz="-0.5192 -0.1778 -0.1905"/>
+
+  </xacro:macro>
+
+</robot>
