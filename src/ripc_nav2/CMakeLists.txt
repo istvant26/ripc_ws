@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(custom_usv_nav)
+project(ripc_nav2)
 find_package(ament_cmake REQUIRED)
 install(DIRECTORY config maps behavior_trees launch DESTINATION share/${PROJECT_NAME})
 ament_package()

@@ -5,14 +5,15 @@
   <!-- Include dynamics plugin macros -->
   <xacro:include filename="$(find ripc_description)/dynamics/ripc_dynamics_plugin.xacro"/>
   <xacro:include filename="$(find ripc_description)/dynamics/thruster_dynamics.xacro"/>
+  <xacro:include filename="$(find ripc_gazebo)/plugins/ripc_plugins.xacro"/>
 
-    <xacro:ripc_thrusters namespace="ripc_usv" parent_link="base_link"/>
+  <xacro:ripc_plugins namespace="ripc_usv" />
+  <xacro:ripc_thrusters namespace="ripc_usv" parent_link="base_link"/>
   <xacro:usv_dynamics_gazebo namespace="ripc_usv"/>
 
   <!-- ================== Base link / Dummy root ================== -->
   <link name="base_link">
   </link>
-
 
   <!-- ================== Hull ================== -->
   <link name="hull">
@@ -50,6 +51,5 @@
     <child link="hull"/>
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
-
  
 </robot>

@@ -2,8 +2,12 @@ from launch import LaunchDescription
 from launch_ros.actions import Node
 from launch.actions import ExecuteProcess, TimerAction
 import os
+from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
+
+    pkg_share = get_package_share_directory('ripc_gazebo')
+    bridge_config = os.path.join(pkg_share, 'config', 'bridge_config.yaml')
 
     return LaunchDescription([
 
@@ -24,21 +28,12 @@ def generate_launch_description():
             ]
         ),
 
-        # Start ros_gz_bridge for thrusters
-        TimerAction(
-            period=6.0,  # slightly after spawn
-            actions=[
-                Node(
-                    package='ros_gz_bridge',
-                    executable='parameter_bridge',
-                    name='thruster_bridge',
-                    arguments=[
-                        '/ripc_usv/thrusters/left/thrust@std_msgs/msg/Float64@gz.msgs.Double',
-                        '/ripc_usv/thrusters/right/thrust@std_msgs/msg/Float64@gz.msgs.Double'
-                    ],
-                    output='screen'
-                )
-            ]
-        ),
+        Node(
+            package='ros_gz_bridge',
+            executable='parameter_bridge',
+            name='bridge_node',
+            parameters=[{'config_file': bridge_config}],
+            output='screen'
+        )
 
     ])

@@ -1,0 +1,27 @@
+# config/bridge_config.yaml
+
+# --- SENSORS (GZ to ROS) ---
+- ros_topic_name: "/model/ripc_usv/odometry"
+  gz_topic_name: "/model/ripc_usv/odometry"
+  ros_type_name: "nav_msgs/msg/Odometry"
+  gz_type_name: "gz.msgs.Odometry"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/tf"
+  gz_topic_name: "/model/ripc_usv/tf"
+  ros_type_name: "tf2_msgs/msg/TFMessage"
+  gz_type_name: "gz.msgs.Pose_V"
+  direction: GZ_TO_ROS
+
+# --- ACTUATORS (ROS to GZ) ---
+- ros_topic_name: "/ripc_usv/thrusters/left/thrust"
+  gz_topic_name: "/ripc_usv/thrusters/left/thrust"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+- ros_topic_name: "/ripc_usv/thrusters/right/thrust"
+  gz_topic_name: "/ripc_usv/thrusters/right/thrust"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ

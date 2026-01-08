@@ -4,7 +4,7 @@ from ament_index_python.packages import get_package_share_directory
 import os
 
 def generate_launch_description():
-    pkg = get_package_share_directory('usv_state_estimation')
+    pkg = get_package_share_directory('ripc_state_estimation')
     ekf_config = os.path.join(pkg, 'config', 'ekf.yaml')
     navsat_config = os.path.join(pkg, 'config', 'navsat_transform.yaml')  # create this file next
 

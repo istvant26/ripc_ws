@@ -11,14 +11,15 @@ def generate_launch_description():
         'urdf',
         'ripc_usv.urdf.xacro'
     )
-
-    # Single string command
+    
+    # Converts the .urdf.xacro file to a urdf output for GZ to use
     robot_description = ParameterValue(
         Command(['xacro ' + urdf_path]),
         value_type=str
     )
 
     return LaunchDescription([
+
         Node(
             package='robot_state_publisher',
             executable='robot_state_publisher',

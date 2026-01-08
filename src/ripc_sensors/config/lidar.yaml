@@ -1,2 +1,2 @@
-scan_topic: /custom_usv/scan
+scan_topic: /ripc_usv/scan
 frame_id: lidar_link

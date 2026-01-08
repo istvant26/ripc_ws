@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="3">
-  <name>custom_usv_nav</name>
+  <name>ripc_nav2</name>
   <version>0.0.1</version>
   <description>Nav2 configs for USV</description>
   <maintainer email="you@example.com">You</maintainer>

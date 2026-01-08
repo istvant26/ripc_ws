@@ -7,11 +7,11 @@
     <link name="hull">
       <pose>0 0 0 0 0 0</pose>
       <inertial>
-        <mass>50.0</mass>
+        <mass>120.0</mass>
         <inertia>
-          <ixx>5.0</ixx>
-          <iyy>5.0</iyy>
-          <izz>10.0</izz>
+          <ixx>120.0</ixx>
+          <iyy>393.0</iyy>
+          <izz>446.0</izz>
           <ixy>0.0</ixy>
           <ixz>0.0</ixz>
           <iyz>0.0</iyz>
