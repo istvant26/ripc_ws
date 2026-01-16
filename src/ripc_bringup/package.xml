@@ -13,5 +13,10 @@
   <exec_depend>std_msgs</exec_depend>
   <exec_depend>ripc_description</exec_depend>
   <exec_depend>ripc_gazebo</exec_depend>
+  <exec_depend>ripc_control</exec_depend>
+  <exec_depend>ripc_sensors</exec_depend>
+  <exec_depend>ripc_nav2</exec_depend>
+  <exec_depend>ripc_state_estimation</exec_depend>
+  <exec_depend>ripc_mission_planning</exec_depend>
 
 </package>

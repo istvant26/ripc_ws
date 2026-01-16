@@ -2,11 +2,15 @@
 
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="ripc_usv">
 
+  <!--Include sensor links and physical properties-->
+  <xacro:include filename="$(find ripc_gazebo)/sensors/imu.xacro"/>
+  <xacro:sensors namespace="ripc_usv" parent_link="base_link" xyz="0.5 0 0.2" rpy="0 0 0" />
+
   <!-- Include dynamics plugin macros -->
   <xacro:include filename="$(find ripc_description)/dynamics/ripc_dynamics_plugin.xacro"/>
   <xacro:include filename="$(find ripc_description)/dynamics/thruster_dynamics.xacro"/>
   <xacro:include filename="$(find ripc_gazebo)/plugins/ripc_plugins.xacro"/>
-
+  
   <xacro:ripc_plugins namespace="ripc_usv" />
   <xacro:ripc_thrusters namespace="ripc_usv" parent_link="base_link"/>
   <xacro:usv_dynamics_gazebo namespace="ripc_usv"/>
@@ -16,36 +20,39 @@
   </link>
 
   <!-- ================== Hull ================== -->
+
+  <!-- Assume non-zero diagnoal values because of the hull's shape and mass distribution -->
   <link name="hull">
     <inertial>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <mass value="120"/>
-      <inertia ixx="120" ixy="0.0" ixz="0.0"
-               iyy="393" iyz="0.0"
-               izz="446"/>
+      <origin xyz="0 0 -0.15" rpy="0 0 0"/>
+      <mass value="131"/>
+      <inertia ixx="20" ixy="0.0" ixz="0.0"
+               iyy="42" iyz="0.0"
+               izz="42"/>
     </inertial>
 
+    <!--  -->
     <visual>
       <origin xyz="0.446 0 0.0127" rpy="0 0 1.5708"/> 
       <geometry>
         <mesh filename="package://ripc_description/meshes/ripc_usv.dae" scale="1 1 1"/>
       </geometry>
       <material name="ripc_hull_color">
-        <color rgba="0.1 0.2 0.8 1.0"/>
+        <color rgba="0.0 1.0 0.0 1.0"/>
       </material>
     </visual>
     
-      <!-- SIMPLE collision box -->
+    <!-- SIMPLE collision box -->
     <collision name="hull_collision_box">
-      <origin xyz="0 0 -0.106" rpy="0 0 0"/>
+      <origin xyz="0.125 0 0.05" rpy="0 0 0"/>
       <geometry>
-        <box size="1.45 0.70 0.20"/>
+        <box size="1.54 0.725 0.67"/>
       </geometry>
     </collision>
 
   </link>
 
-  <!-- Fixed joint from base_link to hull -->
+  <!-- Fixed joint from base_link to hull, makes it so base_link and hull have same frame and essentially behave as one -->
   <joint name="base_to_hull" type="fixed">
     <parent link="base_link"/>
     <child link="hull"/>

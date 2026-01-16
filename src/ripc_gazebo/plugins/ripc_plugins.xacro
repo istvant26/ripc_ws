@@ -15,8 +15,19 @@
       </plugin>
     </gazebo>
 
+
     <gazebo reference="base_link">
       <preserveFixedJoint>true</preserveFixedJoint>
+    </gazebo>
+
+    <gazebo>
+      <plugin
+        filename="gz-sim-joint-state-publisher-system"
+        name="gz::sim::systems::JointStatePublisher">
+        <joint_name>ripc_usv_left_propellor_joint</joint_name>  
+        <joint_name>ripc_usv_right_propellor_joint</joint_name>
+        <topic>/model/ripc_usv/joint_states</topic>
+      </plugin>
     </gazebo>
 
   </xacro:macro>

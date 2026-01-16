@@ -8,7 +8,7 @@
       <!-- ================= BUOYANCY (MONOHULL) ================= -->
       <plugin filename="libSurface.so" name="vrx::Surface">
 
-        <!-- Apply buoyancy to hull -->
+        <!-- Apply buoyancy to base_link -->
         <link_name>base_link</link_name>
 
         <!-- Hull geometry -->
@@ -18,7 +18,7 @@
         <!-- Water surface height -->
         <fluid_level>0.0</fluid_level>
 
-        <!-- Buoyancy points along keel -->
+        <!-- Buoyancy points along keel needs to be symmetric about x-axis to prevent instability -->
         <points>
             <!-- Bow -->
             <point>0.762  0.381 -0.106</point>

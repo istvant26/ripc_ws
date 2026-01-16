@@ -18,4 +18,7 @@ install(DIRECTORY plugins
 install(DIRECTORY config
         DESTINATION share/${PROJECT_NAME})
 
+install(DIRECTORY sensors
+        DESTINATION share/${PROJECT_NAME})
+
 ament_package()

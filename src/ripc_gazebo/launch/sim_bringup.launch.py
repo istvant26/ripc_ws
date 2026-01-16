@@ -22,7 +22,18 @@ def generate_launch_description():
             period=5.0,
             actions=[
                 ExecuteProcess(
-                     cmd=['ros2', 'launch', 'ripc_description', 'description.launch.py'],
+                     cmd=['ros2', 'launch', 'ripc_description', 'description.launch.py','use_sim_time:=true'],
+                     output='screen'
+                )
+            ]
+        ),
+
+        # Wait 10 seconds then display USV in RViz2
+        TimerAction(
+            period=10.0,
+            actions=[
+                ExecuteProcess(
+                     cmd=['ros2', 'launch', 'ripc_gazebo', 'spawn_usv.launch.py'],
                      output='screen'
                 )
             ]
