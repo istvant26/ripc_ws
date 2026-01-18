@@ -1,31 +1,60 @@
 # config/bridge_config.yaml
 
-# --- GZ to ROS ---
-- ros_topic_name: "/model/ripc_usv/odometry"
-  gz_topic_name: "/model/ripc_usv/odometry"
-  ros_type_name: "nav_msgs/msg/Odometry"
-  gz_type_name: "gz.msgs.Odometry"
+# --- CLOCK (Crucial for eliminating delays) ---
+- ros_topic_name: "/clock"
+  gz_topic_name: "/world/sydney_regatta/clock"
+  ros_type_name: "rosgraph_msgs/msg/Clock"
+  gz_type_name: "gz.msgs.Clock"
   direction: GZ_TO_ROS
 
+# This entry takes the LIVE poses from Gazebo and pushes them to ROS TF
+- ros_topic_name: "/tf"
+  gz_topic_name: "/model/ripc_usv/pose"
+  ros_type_name: "tf2_msgs/msg/TFMessage"
+  gz_type_name: "gz.msgs.Pose_V"
+  direction: GZ_TO_ROS
+
+# Bridge the actual Odometry Transform (odom -> base_link)
 - ros_topic_name: "/tf"
   gz_topic_name: "/model/ripc_usv/tf"
   ros_type_name: "tf2_msgs/msg/TFMessage"
   gz_type_name: "gz.msgs.Pose_V"
   direction: GZ_TO_ROS
 
-- ros_topic_name: "/ripc_usv/imu"
-  gz_topic_name: "/model/ripc_usv/imu"
+# --- ODOMETRY ---
+- ros_topic_name: "/model/ripc_usv/odometry"
+  gz_topic_name: "/model/ripc_usv/odometry"
+  ros_type_name: "nav_msgs/msg/Odometry"
+  gz_type_name: "gz.msgs.Odometry"
+  direction: GZ_TO_ROS
+
+# --- SENSORS ---
+- ros_topic_name: "/model/ripc_usv/imu_bow"
+  gz_topic_name: "/model/ripc_usv/imu_bow"
+  ros_type_name: "sensor_msgs/msg/Imu"
+  gz_type_name: "gz.msgs.IMU"
+  direction: GZ_TO_ROS  
+
+- ros_topic_name: "/model/ripc_usv/imu_stern"
+  gz_topic_name: "/model/ripc_usv/imu_stern"
   ros_type_name: "sensor_msgs/msg/Imu"
   gz_type_name: "gz.msgs.IMU"
   direction: GZ_TO_ROS
 
+- ros_topic_name: "/gps/fix"
+  gz_topic_name: "/model/ripc_usv/gps/fix"
+  ros_type_name: "sensor_msgs/msg/NavSatFix"
+  gz_type_name: "gz.msgs.NavSat"
+  direction: GZ_TO_ROS
+
+# --- JOINTS ---
 - ros_topic_name: "/joint_states"
   gz_topic_name: "/model/ripc_usv/joint_states"
   ros_type_name: "sensor_msgs/msg/JointState"
   gz_type_name: "gz.msgs.Model"
   direction: GZ_TO_ROS
 
-# --- ROS to GZ ---
+# --- THRUSTERS (ROS to GZ) ---
 - ros_topic_name: "/ripc_usv/thrusters/left/thrust"
   gz_topic_name: "/ripc_usv/thrusters/left/thrust"
   ros_type_name: "std_msgs/msg/Float64"

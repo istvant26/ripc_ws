@@ -4,7 +4,13 @@
 
   <!--Include sensor links and physical properties-->
   <xacro:include filename="$(find ripc_gazebo)/sensors/imu.xacro"/>
-  <xacro:sensors namespace="ripc_usv" parent_link="base_link" xyz="0.5 0 0.2" rpy="0 0 0" />
+
+  <xacro:imu_sensor_macro namespace="ripc_usv" parent_link="base_link" imu_name="imu_bow" xyz="0.77 0 0.5" rpy="0 0 0" />
+  <xacro:imu_sensor_macro namespace="ripc_usv" parent_link="base_link" imu_name="imu_stern" xyz="-0.77 0 0.5" rpy="0 0 0" />
+
+  <xacro:include filename="$(find ripc_gazebo)/sensors/gps.xacro" />
+
+  <xacro:gps_sensor name="gps" parent="base_link" x="0.0" y="0.0" z="1.5" />
 
   <!-- Include dynamics plugin macros -->
   <xacro:include filename="$(find ripc_description)/dynamics/ripc_dynamics_plugin.xacro"/>
@@ -17,6 +23,7 @@
 
   <!-- ================== Base link / Dummy root ================== -->
   <link name="base_link">
+    
   </link>
 
   <!-- ================== Hull ================== -->
@@ -51,12 +58,11 @@
     </collision>
 
   </link>
-
-  <!-- Fixed joint from base_link to hull, makes it so base_link and hull have same frame and essentially behave as one -->
+  
   <joint name="base_to_hull" type="fixed">
     <parent link="base_link"/>
     <child link="hull"/>
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
- 
+
 </robot>

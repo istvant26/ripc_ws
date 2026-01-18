@@ -3,7 +3,7 @@
 
   <xacro:macro name="ripc_plugins" params="namespace"> 
 
-    <gazebo>
+   <gazebo>
       <plugin
         filename="gz-sim-odometry-publisher-system"
         name="gz::sim::systems::OdometryPublisher">
@@ -11,10 +11,10 @@
         <robot_base_frame>base_link</robot_base_frame>
         <odom_topic>/model/${namespace}/odometry</odom_topic>
         <tf_topic>/model/${namespace}/tf</tf_topic>
+        <publish_tf>false</publish_tf>
         <odom_publish_frequency>50</odom_publish_frequency>
       </plugin>
     </gazebo>
-
 
     <gazebo reference="base_link">
       <preserveFixedJoint>true</preserveFixedJoint>
@@ -24,8 +24,11 @@
       <plugin
         filename="gz-sim-joint-state-publisher-system"
         name="gz::sim::systems::JointStatePublisher">
-        <joint_name>ripc_usv_left_propellor_joint</joint_name>  
-        <joint_name>ripc_usv_right_propellor_joint</joint_name>
+        <update_rate>50</update_rate>
+        <joint_name>ripc_usv_left_propeller_joint</joint_name>  
+        <joint_name>ripc_usv_right_propeller_joint</joint_name>
+        <joint_name>imu_bow_joint</joint_name>
+        <joint_name>imu_stern_joint</joint_name>
         <topic>/model/ripc_usv/joint_states</topic>
       </plugin>
     </gazebo>

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(ripc_state_estimation)
+project(ripc_localization)
 find_package(ament_cmake REQUIRED)
 install(DIRECTORY config launch DESTINATION share/${PROJECT_NAME})
 ament_package()

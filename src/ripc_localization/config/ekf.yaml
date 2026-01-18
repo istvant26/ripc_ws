@@ -1,0 +1,40 @@
+ekf_filter_node:
+  ros__parameters:
+    use_sim_time: True
+    frequency: 30.0
+    two_d_mode: true        # Boats stay on the water surface (Ignores z, roll, pitch)
+    publish_acceleration: true # Publish linear acceleration in the odometry message (default is false)
+    publish_tf: true        # This makes the EKF the "boss" of the odom -> base_link transform and publishes it to ROS
+
+    map_frame: map
+    odom_frame: odom
+    base_link_frame: base_link
+    world_frame: odom
+
+    # Bow IMU
+    imu0: /model/ripc_usv/imu_bow
+    imu0_config: [false, false, false, # x, y, z
+                  true,  true,  true,  # roll, pitch, yaw
+                  false, false, false, # vx, vy, vz
+                  true,  true,  true,  # vroll, vpitch, vyaw
+                  true,  false, false] # ax, ay, az
+    imu0_differential: false    # Use absolute measurements (If false takes the difference between measurements)
+    imu0_relative: true   # Tells the IMU whatever direction it starts in is "zero"
+
+    # Stern IMU
+    imu1: /model/ripc_usv/imu_stern
+    imu1_config: [false, false, false,
+                  true,  true,  true,
+                  false, false, false,
+                  true,  true,  true,
+                  true,  false, false]
+    imu1_differential: false
+    imu1_relative: true
+
+    # GPS
+    odom0: /odometry/gps
+    odom0_config: [true,  true,  false,  # x, y, z
+                  false, false, false, 
+                  false, false, false,
+                  false, false, false,
+                  false, false, false]

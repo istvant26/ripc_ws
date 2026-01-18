@@ -73,4 +73,12 @@
 
   </xacro:macro>
 
+  <gazebo reference="ripc_usv_left_propeller_joint">
+    <preserveFixedJoint>true</preserveFixedJoint>
+  </gazebo>
+
+  <gazebo reference="ripc_usv_right_propeller_joint">
+    <preserveFixedJoint>true</preserveFixedJoint>
+  </gazebo>
+
 </robot>

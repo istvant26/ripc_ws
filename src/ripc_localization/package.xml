@@ -1,6 +1,6 @@
 <?xml version='1.0'?>
 <package format='3'>
-  <name>ripc_state_estimation</name>
+  <name>ripc_localization</name>
   <version>0.0.1</version>
   <description>EKF state estimation for the custom USV (robot_localization configs)</description>
   <maintainer email='you@example.com'>You</maintainer>

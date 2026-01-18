@@ -10,7 +10,7 @@ def generate_launch_description():
     # 1. Declare the Argument (Defaulting to False for safety/real hardware)
     use_sim_time_arg = DeclareLaunchArgument(
         'use_sim_time',
-        default_value='false',
+        default_value='true',
         description='Use simulation (Gazebo) clock if true'
     )
     
@@ -36,21 +36,27 @@ def generate_launch_description():
             executable='robot_state_publisher',
             parameters=[{
                 'robot_description': robot_description,
-                'use_sim_time': use_sim_time # Pass the argument here
+                'use_sim_time': True,
+                'ignore_timestamp': True
             }],
+            output='screen'
+        ),
+
+        Node(
+            package='rviz2',
+            executable='rviz2',
+            parameters=[{'use_sim_time': True}],
             output='screen'
         ),
 
         Node(
             package='joint_state_publisher',
             executable='joint_state_publisher',
-            parameters=[{'use_sim_time': use_sim_time}]
-        ),
-
-        Node(
-            package='rviz2',
-            executable='rviz2',
-            parameters=[{'use_sim_time': use_sim_time}],
+            parameters=[{
+                'use_sim_time': True,
+                'ignore_timestamp': True
+            }],
             output='screen'
         )
+
     ])

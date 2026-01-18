@@ -1,48 +1,51 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <xacro:macro name="sensors" params="namespace parent_link xyz:='0 0 0' rpy:='0 0 0'"> 
+  <xacro:macro name="imu_sensor_macro" params="namespace parent_link imu_name xyz rpy"> 
 
-    <link name="imu_link">
+    <link name="${imu_name}_link">
       <inertial>
         <mass value="0.01"/>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
         <inertia ixx="1e-7" ixy="0" ixz="0" iyy="1e-7" iyz="0" izz="1e-7"/>
       </inertial>
-      <visual>
+      <collision>
         <geometry>
-          <box size="0.05 0.05 0.02"/>
+            <box size="0.01 0.01 0.01"/>
         </geometry>
-      </visual>
+      </collision>
     </link>
 
-    <joint name="imu_joint" type="fixed">
-      <parent link="${parent_link}"/>
-      <child link="imu_link"/>
-      <origin xyz="${xyz}" rpy="${rpy}"/>
+    <joint name="${imu_name}_joint" type="revolute">
+        <parent link="${parent_link}"/>
+        <child link="${imu_name}_link"/>
+        <origin xyz="${xyz}" rpy="${rpy}"/>
+        <limit effort="0" lower="0" upper="0" velocity="0"/> 
     </joint>
 
-    <gazebo reference="imu_joint">
-      <preserveFixedJoint>true</preserveFixedJoint>
-    </gazebo>
-
-    <gazebo reference="imu_link">
-      <sensor name="imu_sensor" type="imu">
+    <gazebo reference="${imu_name}_link">
+      <sensor name="${imu_name}" type="imu">
         <always_on>1</always_on>
         <update_rate>100</update_rate>
-        <visualize>true</visualize>
-        <topic>/model/${namespace}/imu</topic>
-        <gz_frame_id>imu_link</gz_frame_id>
+        <topic>/model/${namespace}/${imu_name}</topic>
+        <gz_frame_id>${imu_name}_link</gz_frame_id>
+        
+        <imu>
+          <angular_velocity>
+            <x><noise type="gaussian"><stddev>2e-4</stddev></noise></x>
+            <y><noise type="gaussian"><stddev>2e-4</stddev></noise></y>
+            <z><noise type="gaussian"><stddev>2e-4</stddev></noise></z>
+          </angular_velocity>
+          <linear_acceleration>
+            <x><noise type="gaussian"><stddev>1.7e-2</stddev></noise></x>
+            <y><noise type="gaussian"><stddev>1.7e-2</stddev></noise></y>
+            <z><noise type="gaussian"><stddev>1.7e-2</stddev></noise></z>
+          </linear_acceleration>
+        </imu>
       </sensor>
     </gazebo>
 
-    <gazebo>
-      <plugin
-        filename="gz-sim-imu-system"
-        name="gz::sim::systems::Imu">
-      </plugin>
+    <gazebo reference="${imu_name}_joint">
+      <preserveFixedJoint>true</preserveFixedJoint>
     </gazebo>
 
-  </xacro:macro>
-
-</robot>
+  </xacro:macro> </robot>

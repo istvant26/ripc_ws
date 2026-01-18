@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="gps_sensor" params="name parent x y z">
+    
+    <joint name="${name}_joint" type="fixed">
+      <parent link="${parent}"/>
+      <child link="${name}_link"/>
+      <origin xyz="${x} ${y} ${z}" rpy="0 0 0"/>
+    </joint>
+
+    <link name="${name}_link">
+      <visual>
+        <geometry>
+          <cylinder radius="0.05" length="0.02"/>
+        </geometry>
+        <material name="white">
+          <color rgba="1 1 1 1"/>
+        </material>
+      </visual>
+      <inertial>
+        <mass value="0.1"/>
+        <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+      </inertial>
+    </link>
+
+    <gazebo reference="${name}_link">
+      <sensor name="${name}" type="navsat">
+        <always_on>1</always_on>
+        <update_rate>10</update_rate>
+        <topic>/model/ripc_usv/gps/fix</topic>
+        <gz_frame_id>${name}_link</gz_frame_id>
+      </sensor>
+    </gazebo>
+  </xacro:macro>
+</robot>
