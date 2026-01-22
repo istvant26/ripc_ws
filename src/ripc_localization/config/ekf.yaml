@@ -9,31 +9,18 @@ ekf_filter_node:
     map_frame: map
     odom_frame: odom
     base_link_frame: base_link
-    world_frame: map
-
-    inital_estimate_covariance: [1e-9, 0,    0,    0,    0,    0,
-                               0,    1e-9, 0,    0,    0,    0,
-                               0,    0,    1e-9, 0,    0,    0,
-                               0,    0,    0,    1e-9, 0,    0,
-                               0,    0,    0,    0,    1e-9, 0,
-                               0,    0,    0,    0,    0,    1e-9]
-
-    process_noise_covariance: [0.05, 0,    0,    0,    0,    0,
-                               0,    0.05, 0,    0,    0,    0,
-                               0,    0,    0.05, 0,    0,    0,
-                               0,    0,    0,    0.1,  0,    0,
-                               0,    0,    0,    0,    0.1,  0,
-                               0,    0,    0,    0,    0,    0.1]
+    world_frame: odom
 
     # Bow IMU
     imu0: /model/ripc_usv/imu_bow
+    imu0_qos: 'best_effort'
     imu0_config: [false, false, false, # x, y, z
                   true,  true,  true,  # roll, pitch, yaw
                   false, false, false, # vx, vy, vz
                   true,  true,  true,  # vroll, vpitch, vyaw
                   true,  true, true] # ax, ay, az
     imu0_differential: false    # Use absolute measurements (If false takes the difference between measurements)
-    imu0_relative: true   # Tells the IMU whatever direction it starts in is "zero"
+    imu0_relative: false   # Tells the IMU whatever direction it starts in is "zero"
 
     # Stern IMU
     imu1: /model/ripc_usv/imu_stern
@@ -43,12 +30,6 @@ ekf_filter_node:
                   true,  true,  true,
                   true,  true, true]
     imu1_differential: false
-    imu1_relative: true
+    imu1_relative: false
 
-    # GPS
-    odom0: /odometry/gps
-    odom0_config: [true,  true,  false,  # x, y, z
-                  false, false, false, 
-                  false, false, false,
-                  false, false, false,
-                  false, false, false]
+   

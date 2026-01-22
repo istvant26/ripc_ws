@@ -29,6 +29,7 @@
         <joint_name>ripc_usv_right_propeller_joint</joint_name>
         <joint_name>imu_bow_joint</joint_name>
         <joint_name>imu_stern_joint</joint_name>
+        <joint_name>gps_joint</joint_name>
         <topic>/model/ripc_usv/joint_states</topic>
       </plugin>
     </gazebo>
