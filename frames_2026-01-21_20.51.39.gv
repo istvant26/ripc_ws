@@ -1,0 +1,14 @@
+digraph G {
+"base_link" -> "hull"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"odom" -> "base_link"[label=" Broadcaster: default_authority\nAverage rate: 30.242\nBuffer length: 4.96\nMost recent transform: 34.32\nOldest transform: 29.36\n"];
+"map" -> "odom"[label=" Broadcaster: default_authority\nAverage rate: 10.204\nBuffer length: 4.9\nMost recent transform: 34.28\nOldest transform: 29.38\n"];
+"base_link" -> "gps_link"[label=" Broadcaster: default_authority\nAverage rate: 50.2\nBuffer length: 5.0\nMost recent transform: 34.348\nOldest transform: 29.348\n"];
+"base_link" -> "imu_bow_link"[label=" Broadcaster: default_authority\nAverage rate: 50.2\nBuffer length: 5.0\nMost recent transform: 34.348\nOldest transform: 29.348\n"];
+"base_link" -> "imu_stern_link"[label=" Broadcaster: default_authority\nAverage rate: 50.2\nBuffer length: 5.0\nMost recent transform: 34.348\nOldest transform: 29.348\n"];
+"base_link" -> "left_propeller_link"[label=" Broadcaster: default_authority\nAverage rate: 50.2\nBuffer length: 5.0\nMost recent transform: 34.348\nOldest transform: 29.348\n"];
+"base_link" -> "right_propeller_link"[label=" Broadcaster: default_authority\nAverage rate: 50.2\nBuffer length: 5.0\nMost recent transform: 34.348\nOldest transform: 29.348\n"];
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 1769064699.1527236"[ shape=plaintext ] ;
+}->"map";
+}

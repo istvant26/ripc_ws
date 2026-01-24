@@ -63,6 +63,7 @@ def generate_launch_description():
         ),
 
         # 5. LOCAL EKF (odom -> base_link)
+        # Keeps internal movements smooth. Accel is OFF to prevent quadratic drift.
         TimerAction(
             period=12.0,
             actions=[
@@ -78,20 +79,38 @@ def generate_launch_description():
                         'world_frame': 'odom',
                         'odom_frame': 'odom',
                         'base_link_frame': 'base_link',
+
+                        'odom0': '/odometry/gps',
+                        'odom0_config': [False, False, False,
+                                         False, False, False, 
+                                         True, True, False, 
+                                         False, False, False, 
+                                         False, False, False],
+
                         'imu0': '/model/ripc_usv/imu_bow',
-                        'imu0_config': [False, False, False,    # Position
-                                        True, True, True,     # Orientation 
-                                        False, False, False,    # Velocity 
-                                        True, True, True,     # Gyroscope
-                                        False, False, False],   # Acceleromter
+                        'imu0_config': [False, False, False,    
+                                        True, True, True,     
+                                        False, False, False,    
+                                        True, True, True,     
+                                        False, False, False],   
                         'imu0_relative': True,
-                        'imu0_qos': 'best_effort'
+                        'imu0_qos': 'best_effort',
+
+                        'imu1': '/model/ripc_usv/imu_stern',
+                        'imu1_config': [False, False, False,    
+                                        True, True , True,     
+                                        False, False, False,    
+                                        True, True, True,     
+                                        False, False, False],   
+                        'imu1_relative': True, 
+                        'imu1_qos':'best_effort'
                     }]
                 )
             ]
         ),
 
         # 6. GLOBAL EKF (map -> odom)
+        # GPS is fused here. Accel is OFF to ensure GPS "Truth" wins.
         TimerAction(
             period=15.0,
             actions=[
@@ -109,26 +128,39 @@ def generate_launch_description():
                         'map_frame': 'map',
                         'odom_frame': 'odom',
                         'base_link_frame': 'base_link',
+                        
                         'odom0': '/odometry/gps',
                         'odom0_config': [True, True, False,
                                          False, False, False, 
                                          False, False, False, 
                                          False, False, False, 
                                          False, False, False],
+                        'odom0_differential': True, # Prevents the "4 million meter" teleport
+
                         'imu0': '/model/ripc_usv/imu_bow',
-                        'imu0_config': [False, False, False,    # Position
-                                        True, True, True,     # Orientation 
-                                        False, False, False,    # Velocity 
-                                        True, True, True,     # Gyroscope
-                                        True, True, True],   # Acceleromter
+                        'imu0_config': [False, False, False,    
+                                        True, True, True,     
+                                        False, False, False,    
+                                        True, True, True,     
+                                        False, False, False],   
                         'imu0_relative': False, 
-                        'imu0_qos':'best_effort'
+                        'imu0_qos':'best_effort',
+
+                        'imu1': '/model/ripc_usv/imu_stern',
+                        'imu1_config': [False, False, False,    
+                                        False, False , False,     
+                                        False, False, False,    
+                                        False, False, False,     
+                                        False, False, False],   
+                        'imu1_relative': False, 
+                        'imu1_qos':'best_effort'
                     }]
                 )
             ]
         ),
 
         # 7. NAVSAT TRANSFORM
+        # Converts Lat/Long to X/Y. Alignment (yaw_offset) is critical here.
         TimerAction(    
             period=20.0,
             actions=[
@@ -138,23 +170,22 @@ def generate_launch_description():
                     name='navsat_transform_node',
                     remappings=[
                         ('imu','/model/ripc_usv/imu_bow'),   
-                        ('imu/data', '/model/ripc_usv/imu_bow'),
                         ('gps/fix', '/gps/fix'),
                         ('odometry/gps', '/odometry/gps'),
                         ('odometry/filtered', '/odometry/filtered/local')
                     ],
                     parameters=[{
                         'use_sim_time': True,
-                        'wait_for_datum': True,
-                        'datum': [-33.724223, 150.692, 0.0],
-                        'yaw_offset': 0.0, # Set back to 1.5708 (standard for ENU)
-                        'use_odometry_yaw': True, 
+                        'wait_for_datum': False, # Let it pick start point as origin
+                        'yaw_offset': 1.5708,     # Align Gazebo North (Y) with ENU North
+                        'magnetic_declination_radians': 0.0,
+                        'use_odometry_yaw': False, 
                         'publish_filtered_gps': True,
-                        'broadcast_cartesian_transform': False, 
+                        'zero_altitude': True,
                         'map_frame': 'map',
                         'odom_frame': 'odom',
                         'base_link_frame': 'base_link',
-                        'world_frame': 'map', # CRITICAL: MUST BE MAP
+                        'world_frame': 'map',
                     }]
                 )
             ]
