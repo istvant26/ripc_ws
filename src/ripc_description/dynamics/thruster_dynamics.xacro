@@ -34,6 +34,7 @@
       <child link="${name}_propeller_link"/>
       <origin xyz="${xyz}" rpy="0 0 0"/>
       <axis xyz="1 0 0"/>
+      <dynamics friction="0.05" damping="0.05"/>
     </joint>
 
     <!-- Gazebo Thruster plugin -->

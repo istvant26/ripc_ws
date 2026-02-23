@@ -8,7 +8,12 @@ from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
     pkg_gazebo = get_package_share_directory('ripc_gazebo')
+    pkg_localization = get_package_share_directory('ripc_localization')
     pkg_description = get_package_share_directory('ripc_description')
+
+    local_ekf_config = os.path.join(pkg_localization, 'config', 'local_ekf.yaml')
+    global_ekf_config = os.path.join(pkg_localization, 'config','global_ekf.yaml')
+    navsat_transform_config = os.path.join(pkg_localization, 'config', 'navsat_transform_node.yaml')
     
     bridge_config = os.path.join(pkg_gazebo, 'config', 'bridge_config.yaml')
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
@@ -72,39 +77,7 @@ def generate_launch_description():
                     executable='ekf_node',
                     name='ekf_filter_node_local',
                     remappings=[('odometry/filtered', '/odometry/filtered/local')],
-                    parameters=[{
-                        'use_sim_time': True,
-                        'two_d_mode': True,
-                        'publish_tf': True,
-                        'world_frame': 'odom',
-                        'odom_frame': 'odom',
-                        'base_link_frame': 'base_link',
-
-                        'odom0': '/odometry/gps',
-                        'odom0_config': [False, False, False,
-                                         False, False, False, 
-                                         True, True, False, 
-                                         False, False, False, 
-                                         False, False, False],
-
-                        'imu0': '/model/ripc_usv/imu_bow',
-                        'imu0_config': [False, False, False,    
-                                        True, True, True,     
-                                        False, False, False,    
-                                        True, True, True,     
-                                        False, False, False],   
-                        'imu0_relative': True,
-                        'imu0_qos': 'best_effort',
-
-                        'imu1': '/model/ripc_usv/imu_stern',
-                        'imu1_config': [False, False, False,    
-                                        True, True , True,     
-                                        False, False, False,    
-                                        True, True, True,     
-                                        False, False, False],   
-                        'imu1_relative': True, 
-                        'imu1_qos':'best_effort'
-                    }]
+                    parameters=[local_ekf_config]
                 )
             ]
         ),
@@ -119,42 +92,7 @@ def generate_launch_description():
                     executable='ekf_node',
                     name='ekf_filter_node_global',
                     remappings=[('odometry/filtered', '/odometry/filtered/global')],
-                    parameters=[{
-                        'use_sim_time': True,
-                        'frequency': 10.0,
-                        'two_d_mode': True,
-                        'publish_tf': True,      
-                        'world_frame': 'map',
-                        'map_frame': 'map',
-                        'odom_frame': 'odom',
-                        'base_link_frame': 'base_link',
-                        
-                        'odom0': '/odometry/gps',
-                        'odom0_config': [True, True, False,
-                                         False, False, False, 
-                                         False, False, False, 
-                                         False, False, False, 
-                                         False, False, False],
-                        'odom0_differential': True, # Prevents the "4 million meter" teleport
-
-                        'imu0': '/model/ripc_usv/imu_bow',
-                        'imu0_config': [False, False, False,    
-                                        True, True, True,     
-                                        False, False, False,    
-                                        True, True, True,     
-                                        False, False, False],   
-                        'imu0_relative': False, 
-                        'imu0_qos':'best_effort',
-
-                        'imu1': '/model/ripc_usv/imu_stern',
-                        'imu1_config': [False, False, False,    
-                                        False, False , False,     
-                                        False, False, False,    
-                                        False, False, False,     
-                                        False, False, False],   
-                        'imu1_relative': False, 
-                        'imu1_qos':'best_effort'
-                    }]
+                    parameters=[global_ekf_config]
                 )
             ]
         ),
@@ -174,19 +112,7 @@ def generate_launch_description():
                         ('odometry/gps', '/odometry/gps'),
                         ('odometry/filtered', '/odometry/filtered/local')
                     ],
-                    parameters=[{
-                        'use_sim_time': True,
-                        'wait_for_datum': False, # Let it pick start point as origin
-                        'yaw_offset': 1.5708,     # Align Gazebo North (Y) with ENU North
-                        'magnetic_declination_radians': 0.0,
-                        'use_odometry_yaw': False, 
-                        'publish_filtered_gps': True,
-                        'zero_altitude': True,
-                        'map_frame': 'map',
-                        'odom_frame': 'odom',
-                        'base_link_frame': 'base_link',
-                        'world_frame': 'map',
-                    }]
+                    parameters=[navsat_transform_config]
                 )
             ]
         ),

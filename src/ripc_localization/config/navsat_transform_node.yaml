@@ -1,46 +1,17 @@
 navsat_transform_node:
   ros__parameters:
     use_sim_time: true
+    wait_for_datum: false
     
-    # --- Frame Naming ---
+    # Alignment: Gazebo North (Y) is 1.5708 rad offset from ROS North
+    yaw_offset: 1.5708
+    magnetic_declination_radians: 0.0
+    use_odometry_yaw: false
+    
+    publish_filtered_gps: true
+    zero_altitude: true
+    
     map_frame: map
     odom_frame: odom
     base_link_frame: base_link
     world_frame: map
-
-    # --- Transform Broadcasting ---
-    broadcast_cartesian_transform: true
-    broadcast_cartesian_transform_as_parent_frame: true
-    publish_filtered_gps: true
-       
-    
-    imu_topic: /model/ripc_usv/imu_bow
-    imu_frame: imu_bow_link
-
-    # --- Heading & Alignment ---
-    use_odometry_yaw: false
-    wait_for_datum: true
-    datum: [-33.724223, 150.69200, 0.0] # Keep commented to start at (0,0,0) for easier debugging
-    yaw_offset: 0.0
-    magnetic_declination_radians: 0.0
-    zero_altitude: true
-
-    # Add Covariance
-    'gps_precision' : 1.0
-
-    # Inside navsat_transform_node parameters
-    utm_zone: 56
-    hemisphere: S
-    use_local_cartesian: false
-
-    # --- QoS Overrides (Required for Gazebo/Bridge) ---
-    qos_overrides:
-      /model/ripc_usv/imu_bow:
-        subscription:
-          reliability: best_effort
-      /gps/fix:
-        subscription:
-          reliability: best_effort
-      /odometry/filtered:
-        subscription:
-          reliability: best_effort

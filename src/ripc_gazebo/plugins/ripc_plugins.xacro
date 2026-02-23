@@ -11,8 +11,9 @@
         <robot_base_frame>base_link</robot_base_frame>
         <odom_topic>/model/${namespace}/odometry</odom_topic>
         <tf_topic>/model/${namespace}/tf</tf_topic>
-        <publish_tf>false</publish_tf>
+        <publish_tf>true</publish_tf>
         <odom_publish_frequency>50</odom_publish_frequency>
+        <dimensions>2</dimensions> 
       </plugin>
     </gazebo>
 
