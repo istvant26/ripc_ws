@@ -19,22 +19,24 @@ ekf_filter_node_global:
                    false, false, false]
     odom0_differential: true
 
+
     # Bow IMU (Main Heading Source)
     imu0: /model/ripc_usv/imu_bow
     imu0_config: [false, false, false,
-                  true,  true,  true,
+                  false,  false,  true,
                   false, false, false,
-                  true,  true,  true,
-                  false, false, false]
+                  false,  false,  true,
+                  true, true, false]
     imu0_relative: false
     imu0_qos: best_effort
 
+    # Austin IMU config
     # Stern IMU (We use the less noisy IMU for the inital heading information)
     imu1: /model/ripc_usv/imu_stern
     imu1_config: [false, false, false,
+                  false, false, true,
                   false, false, false,
-                  false, false, false,
-                  false, false, false,
-                  false, false, false]
+                  false, false, true,
+                  true, true, false]
     imu1_relative: false
     imu1_qos: best_effort
