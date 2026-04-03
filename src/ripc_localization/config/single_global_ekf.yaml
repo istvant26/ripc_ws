@@ -1,0 +1,56 @@
+ekf_global:
+  ros__parameters:
+    frequency: 30.0                 # Match the 20Hz sensor reality
+    predict_to_current_time: true
+    use_sim_time: false
+    sensor_timeout: 0.1
+    two_d_mode: true
+    publish_tf: true
+    print_diagnostics: true
+    permit_corrected_publication: false
+
+
+    map_frame: 'map'
+    odom_frame: 'odom'
+    base_link_frame: 'base_link'
+    world_frame: 'map'              # Global EKF should always be 'map'
+
+    # GPS Position
+    odom0: '/odometry/gps_bow'
+    odom0_config: [true,  true,  false, 
+                   false, false, false, 
+                   false, false, false, 
+                   false, false, false, 
+                   false, false, false]
+    odom0_queue_size: 10
+
+    # GPS Velocity
+    twist0: '/gps_bow/velocity'
+    twist0_config: [false, false, false, 
+                    false, false, false, 
+                    false, false, false, 
+                    false, false, false, 
+                    false, false, false]
+    twist0_queue_size: 10
+
+    # IMU Data
+    imu0: '/imu_bow/data'
+    imu0_config: [false, false, false, 
+                  false, false, true,    # Yaw
+                  false, false, false, 
+                  false, false, true,    # Angular Velocity
+                  true, true, false]   # Disable Accel for land-tracking stability
+    imu0_queue_size: 10
+    imu0_remove_gravitational_acceleration: true
+
+    # --- SIMPLIFIED DIAGONAL MATRICES ---
+    # [X, Y, Z, roll, pitch, yaw, vX, vY, vZ, vRoll, vPitch, vYaw, aX, aY, aZ]
+    process_noise_covariance: [0.05, 0.05, 0.06, 0.03, 0.03, 0.06, 
+                               0.05, 0.05, 0.04, 0.01, 0.01, 0.02, 
+                               0.01, 0.01, 0.015]
+
+    # Starting with 10.0 for X,Y,Yaw is good—it tells the EKF to snap to GPS immediately.
+    # Switched 1e-9 to 1e-6 for numerical stability (prevents NaNs).
+    initial_estimate_covariance: [10.0, 10.0, 1e-6, 1e-6, 1e-6, 10.0, 
+                                 1e-6, 1e-6, 1e-6, 1e-6, 1e-6, 10.0, 
+                                 1.0, 1.0, 1e-6]

@@ -9,7 +9,9 @@
   <xacro:imu_sensor_macro namespace="ripc_usv" parent_link="base_link" imu_name="imu_stern" xyz="-0.77 0 0.5" rpy="0 0 0" />
 
   <xacro:include filename="$(find ripc_gazebo)/sensors/gps.xacro" />
-  <xacro:gps_sensor name="gps" parent="base_link" x="0.0" y="0.0" z="0.75" />
+  <xacro:gps_sensor name="gps_bow" parent="base_link" x="0.85" y="0.0" z="0.5" />
+  <xacro:gps_sensor name="gps_stern" parent="base_link" x="-0.85" y="0.0" z="0.75" />
+
 
   <!-- Include dynamics plugin macros -->
   <xacro:include filename="$(find ripc_description)/dynamics/ripc_dynamics_plugin.xacro"/>

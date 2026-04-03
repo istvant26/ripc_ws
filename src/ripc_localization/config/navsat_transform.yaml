@@ -1,0 +1,28 @@
+navsat_transform_node:
+  ros__parameters:
+    'frequency': 10.0
+    'delay': 3.0
+    'use_sim_time': false
+    'magnetic_declination_radians': 0.1624902 #holmes hall
+    'yaw_offset': 1.5707963 #90 degree yaw offset
+    'zero_altitude': True
+    'broadcast_cartesian_transform': True
+    'broadcast_utm_transform_as_parent_frame': False
+    'publish_filtered_gps': True
+    'use_odometry_yaw': False
+    'wait_for_datum': True
+    'datum': [21.2968174, -157.8163534, 0.0] # Holmes Hall, UHM
+    #'datum': [21.476805, -157.988035, 0.0] # Holmes Hall, UHM
+
+    'use_local_cartesian': False
+    'utm_zone': 4
+    'utm_zone_letter': "Q"
+
+    'map_frame': 'map'
+    'odom_frame': 'odom'
+    'base_link_frame': 'base_link'
+    'world_frame': 'map'
+
+    'transform_timeout': 0.5,
+    'smooth_gps_readings': True
+

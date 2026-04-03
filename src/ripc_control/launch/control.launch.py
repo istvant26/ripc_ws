@@ -1,26 +1,17 @@
+import launch
 from launch import LaunchDescription
 from launch_ros.actions import Node
-from launch.actions import ExecuteProcess
 
 def generate_launch_description():
+    # 1. Define the Node(s) you want to run
+    control_node = Node(
+        package='ripc_control',
+        executable='stress_test_node.py', # Make sure this matches your setup.py
+        name='ripc_Control',
+        output='screen'
+    )
+
+    # 2. Return the LaunchDescription object
     return LaunchDescription([
-
-        # Bridge for thrusters
-        Node(
-            package='ros_gz_bridge',
-            executable='parameter_bridge',
-            name='thruster_bridge',
-            arguments=[
-                '/ripc_usv/thrusters/left/thrust@std_msgs/msg/Float64@gz.msgs.Double',
-                '/ripc_usv/thrusters/right/thrust@std_msgs/msg/Float64@gz.msgs.Double'
-            ],
-            output='screen'
-        ),
-
-        # Run Python script directly using system python
-        ExecuteProcess(
-            cmd=['python3', '/home/riplab/ripc_ws/src/ripc_control/scripts/send_thrust.py'],
-            output='screen'
-        ),
-
+        control_node
     ])

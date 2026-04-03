@@ -6,4 +6,5 @@
   <maintainer email="you@example.com">You</maintainer>
   <license>Apache-2.0</license>
   <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>ripc_localization</exec_depend>
 </package>
