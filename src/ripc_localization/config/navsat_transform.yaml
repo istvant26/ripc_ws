@@ -1,4 +1,4 @@
-navsat_transform_node:
+navsat_transform:
   ros__parameters:
     'frequency': 10.0
     'delay': 3.0
@@ -23,6 +23,6 @@ navsat_transform_node:
     'base_link_frame': 'base_link'
     'world_frame': 'map'
 
-    'transform_timeout': 0.5,
+    'transform_timeout': 0.5
     'smooth_gps_readings': True
 

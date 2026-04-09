@@ -16,13 +16,13 @@ ekf_local:
     world_frame: 'odom'
 
     # GPS Velocity
-    twist0: '/gps_bow/velocity'
-    twist0_config: [false, false, false, 
-                    false, false, false, 
-                    false,  false,  false, 
-                    false, false, false, 
-                    false, false, false]
-    twist0_qos: "reliable"
+    # twist0: '/gps_bow/velocity'
+    # twist0_config: [false, false, false, 
+    #                 false, false, false, 
+    #                 false,  false,  false, 
+    #                 false, false, false, 
+    #                 false, false, false]
+    # twist0_qos: "reliable"
 
     # IMU Data
     imu0: '/imu_bow/data'

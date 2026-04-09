@@ -25,13 +25,13 @@ ekf_global:
     odom0_queue_size: 10
 
     # GPS Velocity
-    twist0: '/gps_bow/velocity'
-    twist0_config: [false, false, false, 
-                    false, false, false, 
-                    false, false, false, 
-                    false, false, false, 
-                    false, false, false]
-    twist0_queue_size: 10
+    # twist0: '/gps_bow/velocity'
+    # twist0_config: [false, false, false, 
+    #                 false, false, false, 
+    #                 false, false, false, 
+    #                 false, false, false, 
+    #                 false, false, false]
+    # twist0_queue_size: 10
 
     # IMU Data
     imu0: '/imu_bow/data'
