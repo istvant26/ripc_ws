@@ -34,9 +34,12 @@ def generate_launch_description():
             parameters=[ekf_local_params],
             remappings=[
                 ('odometry/filtered', 'odometry/local'),
+<<<<<<< HEAD
                 ('odom0', '/odometry/gps_bow'), 
                 ('imu0', '/imu_bow/data'),
                 ('twist0', '/gps_bow/velocity')
+=======
+>>>>>>> 363459e (Upload local workspace files)
                 ]
         ),
         Node(
@@ -47,9 +50,12 @@ def generate_launch_description():
             parameters=[ekf_global_params],
             remappings=[
                 ('odometry/filtered', 'odometry/global'),
+<<<<<<< HEAD
                 ('odom0', '/odometry/gps_bow'), 
                 ('imu0', '/imu_bow/data'),
                 ('twist0', '/gps_bow/velocity')
+=======
+>>>>>>> 363459e (Upload local workspace files)
                 ]
         ),
         Node(
@@ -59,8 +65,11 @@ def generate_launch_description():
             output='screen',
             parameters=[navsat_params],
             remappings=[
+<<<<<<< HEAD
                 ('imu', '/imu_bow/data'),
                 ('gps/fix', '/gps_bow/fix'),
+=======
+>>>>>>> 363459e (Upload local workspace files)
                 ('odometry/filtered', 'odometry/global'),
                 ('odometry/gps', 'odometry/gps_bow'), # Change the output name here
                 ('gps/filtered', 'gps_bow/filtered')
