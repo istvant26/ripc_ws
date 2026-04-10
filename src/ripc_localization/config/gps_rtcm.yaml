@@ -1,0 +1,13 @@
+/ublox_node:
+  ros__parameters:
+    device: "/dev/ttyACM1"  # Path to your Land GPS USB port
+    uart1:
+      baudrate: 115200
+    # Enable RTCM messages for the Rover to consume
+    rtcm:
+      output_msm: 7          # High-precision MSM7 messages
+    # Survey-In: The Base will sit still for 60s or until 2m accuracy is met
+    tmode3:
+      mode: 1                # 1 = Survey-In, 2 = Fixed Position
+      svin_min_dur: 60
+      svin_acc_limit: 2000   # 2.0 meters

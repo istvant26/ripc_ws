@@ -2,10 +2,10 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:macro name="gps_sensor" params="name parent x y z">
     
-    <joint name="gps_joint" type="revolute">
-        <parent link="base_link"/>
-        <child link="gps_link"/>
-        <origin xyz="0.0 0.0 0.75" rpy="0 0 0"/>
+    <joint name="${name}_joint" type="revolute">
+        <parent link="${parent}"/>
+        <child link="${name}_link"/>
+        <origin xyz="${x} ${y} ${z}" rpy="0 0 0"/>
         <axis xyz="0 0 1"/>
         <limit lower="0.0" upper="0.0" effort="0" velocity="0"/> 
     </joint>
@@ -29,12 +29,12 @@
       <sensor name="${name}" type="navsat">
         <always_on>1</always_on>
         <update_rate>10</update_rate>
-        <topic>/model/ripc_usv/gps/fix</topic>
+        <topic>/${name}/fix</topic>
         <gz_frame_id>${name}_link</gz_frame_id>
       </sensor>
     </gazebo>
 
-    <gazebo reference="gps_joint">
+    <gazebo reference="${name}_joint">
       <preserveFixedJoint>true</preserveFixedJoint>
     </gazebo>
 

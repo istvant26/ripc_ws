@@ -16,25 +16,25 @@ ekf_local:
     'base_link_frame': 'base_link'
     'world_frame': 'odom'
 
-    'twist0': '/gps_bow/velocity'
-    'twist0_config': [false, false, false, 
-                    false, false, false, 
-                    true,  true,  false, 
-                    false, false, false, 
-                    false, false, false]
-    'twist0_differential': false
-    'twist0_relative': false
-    'twist0_qos': "reliable"
+    # 'twist0': '/gps_bow/velocity'
+    # 'twist0_config': [false, false, false, 
+    #                 false, false, false, 
+    #                 true,  true,  false, 
+    #                 false, false, false, 
+    #                 false, false, false]
+    # 'twist0_differential': false
+    # 'twist0_relative': false
+    # 'twist0_qos': "reliable"
 
-    'twist1': '/gps_stern/velocity'
-    'twist1_config': [false, false, false, 
-                    false, false, false, 
-                    true,  true,  false, 
-                    false, false, false, 
-                    false, false, false]
-    'twist1_differential': false
-    'twist1_relative': false
-    'twist1_qos': "reliable"
+    # 'twist1': '/gps_stern/velocity'
+    # 'twist1_config': [false, false, false, 
+    #                 false, false, false, 
+    #                 true,  true,  false, 
+    #                 false, false, false, 
+    #                 false, false, false]
+    # 'twist1_differential': false
+    # 'twist1_relative': false
+    # 'twist1_qos': "reliable"
 
 
     'imu0': '/imu_bow/data'
