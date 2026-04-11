@@ -1,4 +1,5 @@
 import os
+import xacro
 from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription, ExecuteProcess
 from launch.launch_description_sources import PythonLaunchDescriptionSource
@@ -8,6 +9,13 @@ from ament_index_python.packages import get_package_share_directory
 def generate_launch_description():
     # --- PATHS ---
     pkg_localization = get_package_share_directory('ripc_localization')
+
+    pkg_description = get_package_share_directory('ripc_description')
+    xacro_file = os.path.join(pkg_description, 'urdf', 'ripc_usv.urdf.xacro')
+
+    # NEW: Process the Xacro file into raw XML
+    robot_description_config = xacro.process_file(xacro_file)
+    robot_description_raw = robot_description_config.toxml()
 
     # 1. Land Base GPS Node
     # We configure this to output UInt8MultiArray directly to avoid the transformer crash
@@ -63,8 +71,29 @@ def generate_launch_description():
         emulate_tty=True # This helps catch those hidden print statements
     )
 
+    # 1. Robot State Publisher (REQUIRED for TF)
+    robot_state_publisher = Node(
+        package='robot_state_publisher',
+        executable='robot_state_publisher',
+        name='robot_state_publisher',
+        output='screen',
+        parameters=[{'robot_description': robot_description_raw,
+                     'publish_frequency': 30.0,
+                     'use_sim_time': False}]
+    )
+
+    # 2. Joint State Publisher (Now it knows WHICH joints to publish)
+    joint_state_publisher = Node(
+        package='joint_state_publisher',
+        executable='joint_state_publisher',
+        name='joint_state_publisher',
+        parameters=[{'robot_description': robot_description_raw}] # Give it the robot info
+    )
+
     return LaunchDescription([
         included_ekf_launch,
         land_base_node,
-        rtcm_bridge_process
+        rtcm_bridge_process,
+        robot_state_publisher,
+        joint_state_publisher
     ])

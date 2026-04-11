@@ -12,7 +12,6 @@ navsat_transform:
     'use_odometry_yaw': False
     'wait_for_datum': True
     'datum': [21.2968174, -157.8163534, 0.0] # Holmes Hall, UHM
-    #'datum': [21.476805, -157.988035, 0.0] # Holmes Hall, UHM
 
     'use_local_cartesian': False
     'utm_zone': 4

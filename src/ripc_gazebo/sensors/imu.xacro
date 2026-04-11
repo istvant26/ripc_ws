@@ -15,7 +15,7 @@
       </collision>
     </link>
 
-    <joint name="${imu_name}_joint" type="revolute">
+    <joint name="${imu_name}_joint" type="fixed">
         <parent link="${parent_link}"/>
         <child link="${imu_name}_link"/>
         <origin xyz="${xyz}" rpy="${rpy}"/>

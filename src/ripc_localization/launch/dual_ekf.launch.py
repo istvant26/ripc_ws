@@ -19,15 +19,7 @@ def generate_launch_description():
     robot_desc = robot_description_config.toxml()
 
     return LaunchDescription([
-        # 1. Robot State Publisher (Replaces ALL static transform publishers)
-        Node(
-            package='robot_state_publisher',
-            executable='robot_state_publisher',
-            name='robot_state_publisher',
-            output='screen',
-            parameters=[{'robot_description': robot_desc}]
-        ),
-
+       
         # 2. EKF Local (Odom -> Base Link)
         Node(
             package='robot_localization',

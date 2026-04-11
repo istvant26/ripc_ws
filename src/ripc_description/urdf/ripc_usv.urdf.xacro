@@ -30,14 +30,14 @@
   <!-- ================== Hull ================== -->
 
   <!-- Assume non-zero diagnoal values because of the hull's shape and mass distribution -->
-  <link name="hull">
+  <!-- <link name="hull">
     <inertial>
       <origin xyz="0 0 -0.15" rpy="0 0 0"/>
       <mass value="131"/>
       <inertia ixx="20" ixy="0.0" ixz="0.0"
                iyy="42" iyz="0.0"
                izz="42"/>
-    </inertial>
+    </inertial> -->
 
     <!--  -->
     <visual>
@@ -50,20 +50,20 @@
       </material>
     </visual>
     
-    <!-- SIMPLE collision box -->
+    <!-- SIMPLE collision box
     <collision name="hull_collision_box">
       <origin xyz="0.125 0 0.05" rpy="0 0 0"/>
       <geometry>
         <box size="1.54 0.725 0.67"/>
       </geometry>
-    </collision>
+    </collision> -->
 
-  </link>
+  <!-- </link> -->
   
-  <joint name="base_to_hull" type="fixed">
+  <!-- <joint name="base_to_hull" type="fixed">
     <parent link="base_link"/>
     <child link="hull"/>
     <origin xyz="0 0 0" rpy="0 0 0"/>
-  </joint>
+  </joint> -->
 
 </robot>

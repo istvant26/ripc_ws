@@ -2,7 +2,7 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:macro name="gps_sensor" params="name parent x y z">
     
-    <joint name="${name}_joint" type="revolute">
+    <joint name="${name}_joint" type="fixed">
         <parent link="${parent}"/>
         <child link="${name}_link"/>
         <origin xyz="${x} ${y} ${z}" rpy="0 0 0"/>

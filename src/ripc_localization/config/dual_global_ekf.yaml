@@ -16,22 +16,22 @@ ekf_global:
     'odom0': '/odometry/gps_bow'
     'odom0_config': [True, True, False, 
                     False, False, False, 
-                    false, false, False, 
+                    False, False, False, 
                     False, False, False, 
                     False, False, False]
     'odom0_differential': False
     'odom0_relative': False
     'odom0_queue_size': 10
 
-    'odom1': '/odometry/gps_stern'
-    'odom1_config': [True, True, False, 
-                    False, False, False, 
-                    false, false, False, 
-                    False, False, False, 
-                    False, False, False]
-    'odom1_differential': False
-    'odom1_relative': False
-    'odom1_queue_size': 10
+    # 'odom1': '/odometry/gps_stern'
+    # 'odom1_config': [True, True, False, 
+    #                 False, False, False, 
+    #                 false, false, False, 
+    #                 False, False, False, 
+    #                 False, False, False]
+    # 'odom1_differential': False
+    # 'odom1_relative': False
+    # 'odom1_queue_size': 10
 
     # 'twist0': '/gps_bow/velocity'
     # 'twist0_config': [False, False, False, 
@@ -66,9 +66,12 @@ ekf_global:
     'imu0_queue_size': 10
     'imu0_remove_gravitational_acceleration': True
 
+    imu0_pose_rejection_threshold: 0.0
+    imu0_angular_velocity_rejection_threshold: 0.0
+
     'imu1': '/imu_stern/data'
     'imu1_config': [False, False, False, 
-                    False, False, True, 
+                    False, False, False, 
                     False, False, False, 
                     False, False, True, 
                     True, True, False]
@@ -76,6 +79,9 @@ ekf_global:
     'imu1_relative': False
     'imu1_queue_size': 10
     'imu1_remove_gravitational_acceleration': True
+
+    imu1_pose_rejection_threshold: 0.0
+    imu1_angular_velocity_rejection_threshold: 0.0
 
      # --- SIMPLIFIED DIAGONAL MATRICES ---
     # [X, Y, Z, roll, pitch, yaw, vX, vY, vZ, vRoll, vPitch, vYaw, aX, aY, aZ]
@@ -88,3 +94,4 @@ ekf_global:
     initial_estimate_covariance: [10.0, 10.0, 1e-6, 1e-6, 1e-6, 10.0, 
                                  1e-6, 1e-6, 1e-6, 1e-6, 1e-6, 10.0, 
                                  1.0, 1.0, 1e-6]
+

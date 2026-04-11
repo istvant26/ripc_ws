@@ -29,7 +29,7 @@
     </link>
 
     <!-- Continuous joint for spinning -->
-    <joint name="${namespace}_${name}_propeller_joint" type="continuous">
+    <joint name="${namespace}_${name}_propeller_joint" type="fixed">
       <parent link="${parent_link}"/>
       <child link="${name}_propeller_link"/>
       <origin xyz="${xyz}" rpy="0 0 0"/>
