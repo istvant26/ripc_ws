@@ -1,0 +1,58 @@
+/**:
+  ros__parameters:
+    debug: 1
+
+    # USB connection from the land-base computer to the F9P control port
+    device: /dev/serial/by-path/pci-0000:00:14.0-usbv2-0:10.4:1.0
+    frame_id: land_station
+
+    config_on_startup: true
+    auto_reconnect: true
+
+    # Keep this if you want the base config saved in receiver memory.
+    save:
+      mask: 3103
+      device: 4
+
+    dynamic_model: stationary
+    fix_mode: auto
+    dr_limit: 0
+    enable_ppp: false
+
+    # Survey-in should run at 1 Hz.
+    rate: 1
+    nav_rate: 1
+
+    # UART1 is the physical RTCM output that a helper node reads and republishes on /rtcm_land.
+    uart1:
+      baudrate: 115200
+      in: 0
+      out: 32
+
+    # Survey-in base mode
+    tmode3: 1
+    sv_in:
+      reset: false
+      min_dur: 300
+      acc_lim: 3.0
+
+    # RTCM output set for the fixed land base.
+    # Matches the ublox sample pattern.
+    rtcm:
+      ids: [5, 87, 77, 230]
+      rates: [1, 1, 1, 10]
+
+    gnss:
+      glonass: true
+      beidou: false
+      qzss: false
+
+    inf:
+      all: true
+
+    publish:
+      all: false
+      nav:
+        svin: true
+        status: true
+        pvt: true
