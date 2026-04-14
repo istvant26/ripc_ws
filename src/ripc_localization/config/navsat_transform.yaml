@@ -15,7 +15,7 @@ navsat_transform:
 
     'use_local_cartesian': False
     'utm_zone': 4
-    'utm_zone_letter': "Q"
+    'utm_zone_letter': "N"   # was "Q" — this is causing the invalid easting
 
     'map_frame': 'map'
     'odom_frame': 'odom'

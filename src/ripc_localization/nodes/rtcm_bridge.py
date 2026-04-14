@@ -1,45 +1,55 @@
 #!/usr/bin/env python3
+import serial
 import rclpy
 from rclpy.node import Node
-from ublox_msgs.msg import RxmRTCM
 from std_msgs.msg import UInt8MultiArray
-import sys
 
-class RTCMBridge(Node):
+class LandBaseSerialNode(Node):
     def __init__(self):
-        super().__init__('rtcm_bridge')
-        self.get_logger().info('Bridge Node Initializing...')
+        super().__init__('land_base_serial')
         
-        self.subscription = self.create_subscription(
-            RxmRTCM,
-            '/rxmrtcm_raw',
-            self.listener_callback,
-            10)
+        self.port = '/dev/ttyACM0'  # Your base GPS
+        self.baud = 115200
         
-        self.publisher = self.create_publisher(
-            UInt8MultiArray, 
-            '/rtcm_land', 
-            10)
+        self.publisher = self.create_publisher(UInt8MultiArray, '/rtcm_land', 10)
         
-        self.get_logger().info('Bridge Node Ready: /rxmrtcm_raw -> /rtcm_land')
-
-    def listener_callback(self, msg):
-        # This converts the message
-        new_msg = UInt8MultiArray()
-        new_msg.data = msg.data
-        self.publisher.publish(new_msg)
+        try:
+            self.ser = serial.Serial(self.port, self.baud, timeout=0.1)
+            self.get_logger().info(f'✓ Connected to base GPS on {self.port}')
+        except Exception as e:
+            self.get_logger().error(f'✗ Failed to open {self.port}: {e}')
+            exit(1)
+        
+        # Poll at 100Hz
+        self.timer = self.create_timer(0.01, self.timer_callback)
+        self.msg_count = 0
+    
+    def timer_callback(self):
+        if self.ser.in_waiting > 0:
+            raw_bytes = self.ser.read(self.ser.in_waiting)
+            
+            msg = UInt8MultiArray()
+            msg.data = list(raw_bytes)
+            self.publisher.publish(msg)
+            
+            self.msg_count += 1
+            if self.msg_count % 100 == 0:
+                self.get_logger().info(f'Published {self.msg_count} RTCM packets')
+    
+    def __del__(self):
+        if hasattr(self, 'ser') and self.ser.is_open:
+            self.ser.close()
 
 def main(args=None):
-    print("Main function started...")
     rclpy.init(args=args)
+    node = LandBaseSerialNode()
+    
     try:
-        bridge = RTCMBridge()
-        print("Spinning node...")
-        rclpy.spin(bridge)
-    except Exception as e:
-        print(f"Error: {e}")
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
     finally:
-        print("Shutting down...")
+        node.destroy_node()
         rclpy.shutdown()
 
 if __name__ == '__main__':

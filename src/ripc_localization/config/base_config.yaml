@@ -1,0 +1,35 @@
+/**:
+  ros__parameters:
+    device: "/dev/ttyACM0"
+    frame_id: "land_station"
+    config_on_startup: true
+    auto_reconnect: true
+    clear_initial_state: false
+
+    rate: 1.0
+    nav_rate: 1 
+
+    # TMODE3 Fixed Mode
+    tmode3: 2
+    
+    # Jazzy driver requires arp.position for the C++ check to pass
+    arp:
+      position: [21.2968174, -157.8163534, 0.0] # ECEF coordinates (X, Y, Z in cm)
+      position_hp: [0, 0, 0]                # High-precision decimals
+    
+    # Protocols
+    usb:
+      in: 35
+      out: 32
+    
+    # RTCM IDs
+    rtcm:
+      ids: [5, 77, 87, 97, 230]
+      rates: [1, 1, 1, 1, 10]
+
+    publish:
+      nav:
+        svin: true
+        pvt: true
+      rxm:
+        rtcm: true
